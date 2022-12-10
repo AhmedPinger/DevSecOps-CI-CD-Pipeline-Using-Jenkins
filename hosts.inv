@@ -1,0 +1,2 @@
+[linux]
+172.16.51.129 ansible_user=root ansible_password=@Bulb123
