@@ -1,0 +1,22 @@
+# Define the directory where your Ansible playbooks are stored
+def playbookDir = '/home/ahmed_pinger/Documents/IEC/Playbooks/git'
+
+# Define a variable to store the list of playbook files
+def playbookFiles = []
+
+# Get a list of all the playbook files in the playbook directory
+new File(playbookDir).eachFileRecurse { file ->
+  if (file.name.endsWith('.yml')) {
+    playbookFiles.add(file.name)
+  }
+}
+
+# Define a pipeline stage to run the playbooks
+stage('Run Ansible Playbooks') {
+  steps {
+    # Loop through the playbook files and run each one using the ansible-playbook command
+    playbookFiles.each { playbook ->
+      sh "ansible-playbook ${playbookDir}/${playbook}"
+    }
+  }
+}
