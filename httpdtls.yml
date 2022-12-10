@@ -1,0 +1,28 @@
+---
+
+- hosts: all
+  tasks:
+  - name: install Apache
+    yum:
+      name: httpd
+      state: present
+
+  - name: start Apache
+    service:
+      name: httpd
+      state: started
+      enabled: true
+
+  - name: enable Apache TLS listener
+    lineinfile:
+      dest: /etc/httpd/conf.d/ssl.conf
+      regexp: '^Listen '
+      line: 'Listen 443'
+    notify:
+    - restart apache
+
+  handlers:
+  - name: restart apache
+    service:
+      name: httpd
+      state: restarted

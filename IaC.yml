@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: Check if SSH is open to WWW
+    shell: netstat -an | grep -E "tcp.*:22.*:80"
+    register: ssh_check
+    failed_when: ssh_check.rc != 1
+  - name: Fail if SSH is open to WWW
+    fail:
+      msg: "SSH is open to WWW"
+    when: ssh_check.rc == 0

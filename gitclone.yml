@@ -1,0 +1,12 @@
+---
+- hosts: all
+  tasks:
+  - name: install git
+    yum:
+      name: git
+      state: present
+  - name: clone git repository
+    git:
+      repo: https://github.com/AhmedPinger/Vulnerable-WebApp.git
+      dest: /var/www/html
+      force: true

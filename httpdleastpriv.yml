@@ -1,0 +1,28 @@
+---
+
+- hosts: all
+  become: yes
+  tasks:
+  - name: Create the http group
+    group:
+      name: http
+      state: present
+
+  - name: Create the http user
+    user:
+      name: http
+      group: http
+      system: yes
+      state: present
+
+  - name: Set the correct permissions on the web root directory
+    file:
+      path: /var/www/html
+      owner: http
+      group: http
+      mode: 'u=rwx,g=rx,o=rx'
+
+  - name: Restart the HTTP service
+    service:
+      name: httpd
+      state: restarted

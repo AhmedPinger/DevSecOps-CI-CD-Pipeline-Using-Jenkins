@@ -1,0 +1,21 @@
+---
+
+- hosts: all
+  become: yes
+  tasks:
+  - name: Install the Apache HTTP server
+    yum:
+      name: httpd
+      state: present
+
+  - name: Edit the Apache configuration file to disable HTTPS
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^Listen 443'
+      line: '# Listen 443'
+      state: present
+
+  - name: Restart the Apache HTTP server
+    service:
+      name: httpd
+      state: restarted

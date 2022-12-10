@@ -1,0 +1,16 @@
+---
+# This playbook installs the Apache HTTP server
+
+ - name: Install Apache HTTP server
+   hosts: linux
+   become: yes
+   tasks:
+     - name: Install the Apache HTTP server
+       yum:
+         name: httpd
+         state: present
+
+     - name: Ensure the Apache HTTP server is running
+       service:
+         name: httpd
+         state: started

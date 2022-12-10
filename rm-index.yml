@@ -1,0 +1,7 @@
+---
+- hosts: all
+  tasks:
+    - name: Remove index.html file if it exists
+      file:
+        path: /var/www/html/index.html
+        state: absent
