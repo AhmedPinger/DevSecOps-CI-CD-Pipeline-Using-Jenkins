@@ -338,7 +338,7 @@ modified.
 
 #### **Results**
 
-<img src="media/image2.png" style="width:6.5in;height:7.72222in" />
+<img src="https://lh7-us.googleusercontent.com/xXvp-k3UXlgQw0MnBjdjCIiEunf-ZMa-YzW6ovf-sB8gK42F_tQh3vCkA5ySTrXQeNwR4kepBEkgzKi0qYi5BRD6aDuxMNKzhXrXp156baqzCdqNCICrUia98HUgkBTWTy-tBSF4HxPGKyRGV0_y0Bs" style="width:6.5in;height:7.72222in" />
 
 ### **Cloning**
 
@@ -388,7 +388,7 @@ git repository onto a group of servers.
 
 #### **Results**
 
-<img src="media/image8.png" style="width:6.5in;height:2.20833in" />
+<img src="https://lh7-us.googleusercontent.com/55kVJ96WQ2EscoqEjUCpE3j-IeeJM6b6YAKI93aCE1DPEad25aGT7dHOtkQB1ThRzl5c82XuZGYHDBoRQM8taGJX4_hnqR-3FUSHhaSCRelBUruhMrmw0TDwgGT0ErTskBo5LYNnoLBK8kIe_qj4GXc" style="width:6.5in;height:2.20833in" />
 
 ### **HTTPd Installation**
 
@@ -440,7 +440,7 @@ it is running on a group of Linux servers.
 
 #### **Results**
 
-<img src="media/image1.png" style="width:6.5in;height:2.23611in" />
+<img src="https://lh7-us.googleusercontent.com/VC5QZsAvD3oxM2pz74SRRRqn1PpJa8Ib3QjDEMvS_VAhZVcwqBLEFJYQLOYUFnt8rGn6jSF0c-uEGF_2C740PiqECab314vDICjX8lkV3x-URseBISMZfUd0uN7IkKwO86DPn4wxqXiQt3lDBOUAQqE" style="width:6.5in;height:2.23611in" />
 
 ### **Use HTTPS Only**
 
@@ -504,7 +504,7 @@ HTTPS on a group of servers.
 
 #### **Results**
 
-<img src="media/image4.png" style="width:6.5in;height:2.54167in" />
+<img src="https://lh7-us.googleusercontent.com/8PXmtHyWfLdLIOk3aR35o0J3YXfne1o0ubbnxu5V4phg7AkMAsxSwp6ZLio9f5vQrhx99xGLs-gnHQr_IrNnvDP8-s1NzWpg-2tuwFFCChgkB-laFRjl_v6y8zb7vd_roDIZp7u42Y1dsmgOP3_xHbs" style="width:6.5in;height:2.54167in" />
 
 ### **Port Redirection**
 
@@ -565,7 +565,7 @@ port it listens on to 8080 on a group of servers.
 
 #### **Results**
 
-<img src="media/image6.png" style="width:6.5in;height:2.66667in" />
+<img src="https://lh7-us.googleusercontent.com/qUpYr6g0R9mCb5Z60Bl2VGy5UtbgJ6c2IUiJL0PKqpWSgqx1myLJuXby_UIY3TH8DmUqbFdGaq5sk0tt7G4pRyCDFPXGElRX6jiG4YDhEPG3c2NQQTYHNygFDvgXupcTeNIug6Q773eQEn1L1Ml-yNc" style="width:6.5in;height:2.66667in" />
 
 ### **Least Privilege**
 
@@ -649,7 +649,7 @@ to gain access to the system.
 
 #### **Results**
 
-<img src="media/image11.png" style="width:6.5in;height:3in" />
+<img src="https://lh7-us.googleusercontent.com/qlQB6N332AwXPbKbZYNSd95NqonFO9nu0G7_0OOQbMjgKvRgZvx5wTZJkkqY1Jf7cETdNsYrKo2iYggF2IaeSPykObaq69PCZiScB2OFZJqYU3wW565u5a4b9fDhShn3PbBr-IBtd09aJF3aqr7RBrI" style="width:6.5in;height:3in" />
 
 ### **Activating TLS Listener**
 
@@ -731,7 +731,7 @@ on a group of servers.
 
 #### **Results**
 
-<img src="media/image10.png" style="width:6.5in;height:2.91667in" />
+<img src="https://lh7-us.googleusercontent.com/OjI7buAPOhrNISHQnjnPGqKH_SKbeykh8HbJoAUFJ4i9v7IDIxjLuQY0kLXuLwN0n3EhNxv4_bCpFB54teuIUCf_EpTUpSkqQWl6yGYi_N0BInir0rObgphmLZBcZB0wbgYPfRNnjA3dlqakXvDdglU" style="width:6.5in;height:2.91667in" />
 
 ### **HTTPS Header Security**
 
@@ -896,7 +896,7 @@ security of the server.
 
 #### **Results**
 
-<img src="media/image12.png" style="width:6.5in;height:4.875in" />
+<img src="https://lh7-us.googleusercontent.com/hPeV7bJGGGDoFNFxtHrmbrhZVSzyTUv3syYQ18zfQr05fujON4v791u7LZwqmPXcqlG6STYW_cooVJ-RfQ6FQcs2tLhpb3VYoX7fOvQhbp0UxtJizhbnolhE1AA5XBVXqBDUc5JHPf5t11qA37rS7k8" style="width:6.5in;height:4.875in" />
 
 ## **Setting up Softwares**
 
@@ -1426,11 +1426,11 @@ This pipeline can be executed by running the pipeline job in Jenkins.
 
 ## **Testing & Results**
 
-<img src="media/image9.png" style="width:6.5in;height:2.34722in" />
+<img src="https://lh7-us.googleusercontent.com/5PHLgUwAmI7ntdENc9w3HlC_hUYbqpzTdd0DDuKharwkNKsPd52TJFMQ1HbU2DpKMQZ2yV81fqbtGHSkJN3cNoj3HGEsBQEO_IU50dTlTA6nui1wMaHCwr66bgIWw72wA4mmutpp_M8giN4hpN72tB8" style="width:6.5in;height:2.34722in" />
 
 We have a full-stage view of the pipeline where all stages of the
 pipeline is executed successfully.
 
 And we have the deployed website as well
 
-<img src="media/image5.png" style="width:6.5in;height:3.04167in" />
+<img src="https://lh7-us.googleusercontent.com/3mLMjiIZ3NlUxZVEd4zSfOaaeKCVXJwFM17B4uAkWZTFoTlYPk92sjCotrtZIXhIm7vUS0UrnX8gLLHVZwIUS5S0TBgJg142cvfYw13tVBl5zOOLt4tt4SadBDZs78tzlUqdPNmgz5Riw9dZ3UipupI" style="width:6.5in;height:3.04167in" />
