@@ -320,29 +320,19 @@ Finally, the playbook includes a handler called "Reload SSH" which is used to re
 Starting with the code
 
 ```yaml
----
+- hosts: all
+  tasks:
+    - name: Install Git
+      yum:
+        name: git
+        state: present
 
-\- hosts: all
+    - name: Clone Git repository
+      git:
+        repo: https://github.com/AhmedPinger/DevSecOps-CI-CD-Pipeline-Using-Jenkins/Vulnerable-WebApp.git
+        dest: /var/www/html
+        force: true
 
-tasks:
-
-\- name: install git
-
-yum:
-
-name: git
-
-state: present
-
-\- name: clone git repository
-
-git:
-
-repo: https://github.com/AhmedPinger/DevSecOps-CI-CD-Pipeline-Using-Jenkins/Vulnerable-WebApp.git
-
-dest: /var/www/html
-
-force: true
 ```
 #### **Explanation**
 
@@ -366,33 +356,22 @@ Overall, this playbook installs the git package and clones a specific git reposi
 Starting with the code
 
 ```yaml
----
-
 # This playbook installs the Apache HTTP server
 
-\- name: Install Apache HTTP server
+- name: Install Apache HTTP server
+  hosts: linux
+  become: yes
+  tasks:
+    - name: Install the Apache HTTP server
+      yum:
+        name: httpd
+        state: present
 
-hosts: linux
+    - name: Ensure the Apache HTTP server is running
+      service:
+        name: httpd
+        state: started
 
-become: yes
-
-tasks:
-
-\- name: Install the Apache HTTP server
-
-yum:
-
-name: httpd
-
-state: present
-
-\- name: Ensure the Apache HTTP server is running
-
-service:
-
-name: httpd
-
-state: started
 ```
 #### **Explanation**
 
@@ -414,41 +393,26 @@ Overall, this playbook installs the Apache HTTP server and ensures that it is ru
 
 Starting with the code
 ```yaml
----
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install the Apache HTTP server
+      yum:
+        name: httpd
+        state: present
 
-\- hosts: all
+    - name: Edit the Apache configuration file to disable HTTPS
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^Listen 443'
+        line: '# Listen 443'
+        state: present
 
-become: yes
+    - name: Restart the Apache HTTP server
+      service:
+        name: httpd
+        state: restarted
 
-tasks:
-
-\- name: Install the Apache HTTP server
-
-yum:
-
-name: httpd
-
-state: present
-
-\- name: Edit the Apache configuration file to disable HTTPS
-
-lineinfile:
-
-path: /etc/httpd/conf/httpd.conf
-
-regexp: '^Listen 443'
-
-line: '# Listen 443'
-
-state: present
-
-\- name: Restart the Apache HTTP server
-
-service:
-
-name: httpd
-
-state: restarted
 ```
 #### **Explanation**
 
@@ -472,37 +436,24 @@ Overall, this playbook installs the Apache HTTP server and disables HTTPS on a g
 
 Starting with the code
 ```yaml
----
+- hosts: all
+  tasks:
+    - name: Install Apache HTTP Server
+      package:
+        name: httpd
+        state: present
 
-\- hosts: all
+    - name: Update Apache HTTP Server configuration
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^Listen 80$'
+        line: 'Listen 8080'
 
-tasks:
+    - name: Restart Apache HTTP Server
+      service:
+        name: httpd
+        state: restarted
 
-\- name: Install Apache HTTP Server
-
-package:
-
-name: httpd
-
-state: present
-
-\- name: Update Apache HTTP Server configuration
-
-lineinfile:
-
-path: /etc/httpd/conf/httpd.conf
-
-regexp: '^Listen 80$'
-
-line: 'Listen 8080'
-
-\- name: Restart Apache HTTP Server
-
-service:
-
-name: httpd
-
-state: restarted
 ```
 #### **Explanation**
 
@@ -527,53 +478,33 @@ Overall, this playbook installs the Apache HTTP server and changes the port it l
 
 Starting with the code
 ```
----
+- hosts: all
+  become: yes
+  tasks:
+    - name: Create the http group
+      group:
+        name: http
+        state: present
 
-\- hosts: all
+    - name: Create the http user
+      user:
+        name: http
+        group: http
+        system: yes
+        state: present
 
-become: yes
+    - name: Set the correct permissions on the web root directory
+      file:
+        path: /var/www/html
+        owner: http
+        group: http
+        mode: 'u=rwx,g=rx,o=rx'
 
-tasks:
+    - name: Restart the HTTP service
+      service:
+        name: httpd
+        state: restarted
 
-\- name: Create the http group
-
-group:
-
-name: http
-
-state: present
-
-\- name: Create the http user
-
-user:
-
-name: http
-
-group: http
-
-system: yes
-
-state: present
-
-\- name: Set the correct permissions on the web root directory
-
-file:
-
-path: /var/www/html
-
-owner: http
-
-group: http
-
-mode: 'u=rwx,g=rx,o=rx'
-
-\- name: Restart the HTTP service
-
-service:
-
-name: httpd
-
-state: restarted
 ```
 #### **Explanation**
 
@@ -601,53 +532,33 @@ Overall, this playbook sets up the Apache HTTP server to run as a non-root user 
 
 Starting with the code
 ```yaml
----
+- hosts: all
+  tasks:
+    - name: Install Apache
+      yum:
+        name: httpd
+        state: present
 
-\- hosts: all
+    - name: Start Apache
+      service:
+        name: httpd
+        state: started
+        enabled: true
 
-tasks:
+    - name: Enable Apache TLS listener
+      lineinfile:
+        dest: /etc/httpd/conf.d/ssl.conf
+        regexp: '^Listen '
+        line: 'Listen 443'
+      notify:
+        - restart apache
 
-\- name: install Apache
+  handlers:
+    - name: restart apache
+      service:
+        name: httpd
+        state: restarted
 
-yum:
-
-name: httpd
-
-state: present
-
-\- name: start Apache
-
-service:
-
-name: httpd
-
-state: started
-
-enabled: true
-
-\- name: enable Apache TLS listener
-
-lineinfile:
-
-dest: /etc/httpd/conf.d/ssl.conf
-
-regexp: '^Listen '
-
-line: 'Listen 443'
-
-notify:
-
-\- restart apache
-
-handlers:
-
-\- name: restart apache
-
-service:
-
-name: httpd
-
-state: restarted
 ```
 #### **Explanation**
 
@@ -673,112 +584,67 @@ Overall, this playbook installs the Apache HTTP server and enables HTTPS on a gr
 
 Starting with the code
 ```yaml
----
+- name: Configure HTTP header security
+  hosts: linux
+  become: yes
+  tasks:
+    - name: Install the Apache HTTP server
+      yum:
+        name: httpd
+        state: present
 
-\- name: Configure HTTP header security
+    - name: Ensure the Apache HTTP server is running
+      service:
+        name: httpd
+        state: started
 
-hosts: linux
+    - name: Set the ServerTokens directive to "Prod"
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^(ServerTokens) .*'
+        line: 'ServerTokens Prod'
+        state: present
 
-become: yes
+    - name: Set the ServerSignature directive to "Off"
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^(ServerSignature) .*'
+        line: 'ServerSignature Off'
+        state: present
 
-tasks:
+    - name: Set the X-Frame-Options header to "SAMEORIGIN"
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^(Header always) .*'
+        line: 'Header always set X-Frame-Options "SAMEORIGIN"'
+        state: present
 
-\- name: Install the Apache HTTP server
+    - name: Set the X-XSS-Protection header to "1; mode=block"
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^(Header always) .*'
+        line: 'Header always set X-XSS-Protection "1; mode=block"'
+        state: present
 
-yum:
+    - name: Set the X-Content-Type-Options header to "nosniff"
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^(Header always) .*'
+        line: 'Header always set X-Content-Type-Options "nosniff"'
+        state: present
 
-name: httpd
+    - name: Set the Strict-Transport-Security header
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^(Header always) .*'
+        line: 'Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"'
+        state: present
 
-state: present
+    - name: Restart the Apache HTTP server
+      service:
+        name: httpd
+        state: restarted
 
-\- name: Ensure the Apache HTTP server is running
-
-service:
-
-name: httpd
-
-state: started
-
-\- name: Set the ServerTokens directive to "Prod"
-
-lineinfile:
-
-path: /etc/httpd/conf/httpd.conf
-
-regexp: '^(ServerTokens) .\*'
-
-line: 'ServerTokens Prod'
-
-state: present
-
-\- name: Set the ServerSignature directive to "Off"
-
-lineinfile:
-
-path: /etc/httpd/conf/httpd.conf
-
-regexp: '^(ServerSignature) .\*'
-
-line: 'ServerSignature Off'
-
-state: present
-
-\- name: Set the X-Frame-Options header to "SAMEORIGIN"
-
-lineinfile:
-
-path: /etc/httpd/conf/httpd.conf
-
-regexp: '^(Header always) .\*'
-
-line: 'Header always set X-Frame-Options "SAMEORIGIN"'
-
-state: present
-
-\- name: Set the X-XSS-Protection header to "1; mode=block"
-
-lineinfile:
-
-path: /etc/httpd/conf/httpd.conf
-
-regexp: '^(Header always) .\*'
-
-line: 'Header always set X-XSS-Protection "1; mode=block"'
-
-state: present
-
-\- name: Set the X-Content-Type-Options header to "nosniff"
-
-lineinfile:
-
-path: /etc/httpd/conf/httpd.conf
-
-regexp: '^(Header always) .\*'
-
-line: 'Header always set X-Content-Type-Options "nosniff"'
-
-state: present
-
-\- name: Set the Strict-Transport-Security header
-
-lineinfile:
-
-path: /etc/httpd/conf/httpd.conf
-
-regexp: '^(Header always) .\*'
-
-line: 'Header always set Strict-Transport-Security "max-age=31536000;
-includeSubDomains"'
-
-state: present
-
-\- name: Restart the Apache HTTP server
-
-service:
-
-name: httpd
-
-state: restarted
 ```
 #### **Explanation**
 
