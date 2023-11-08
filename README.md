@@ -1,15 +1,6 @@
-<img src="media/image7.png" style="width:2.36458in;height:2.36458in" />
-
 **DevSecOps CI/CD Pipeline Using Jenkins**
 
 **By Ahmed Pinger**
-
-**Contact Information:  
- Name: Ahmed Pinger Phone: +92 3337746437   
-E-mail: [<u>pingerahmed@gmail.com</u>](mailto:pingerahmed@gmail.com)   
-LinkedIn: linkedin.com/in/ahmedpinger**
-
-  **Faculty of Cyber Security At the Institute of Emerging Careers**
 
 # **Introduction**
 
@@ -58,124 +49,73 @@ project which are listed below.
 
 # **Table Of Contents**
 
-**[Introduction](#introduction)** **2**
+**[Introduction](#introduction)**
 
-**[Project Implementation Plan](#project-implementation-plan)** **2**
+**[Project Implementation Plan](#project-implementation-plan)**
 
-**[Version Control](#version-control)** **3**
+**[Version Control](#version-control)**
 
-**[Table Of Contents](#table-of-contents)** **4**
+**[Table Of Contents](#table-of-contents)**
 
-**[Scope Of Work](#scope-of-work)** **5**
+**[Scope Of Work](#scope-of-work)** 
 
-**[Project Flow](#project-flow)** **6**
+**[Project Flow](#project-flow)** 
 
-> [Design](#design) 6
->
-> [Designing Playbooks](#designing-playbooks) 6
->
-> [IaC Checks](#iac-checks) 6
->
-> [Explanation](#explanation) 11
->
-> [Results](#results) 12
->
-> [Cloning](#cloning) 13
->
-> [Explanation](#explanation-1) 13
->
-> [Results](#results-1) 14
->
-> [HTTPd Installation](#httpd-installation) 14
->
-> [Explanation](#explanation-2) 15
->
-> [Results](#results-2) 15
->
-> [Use HTTPS Only](#use-https-only) 16
->
-> [Explanation](#explanation-3) 17
->
-> [Results](#results-3) 17
->
-> [Port Redirection](#port-redirection) 18
->
-> [Explanation](#explanation-4) 19
->
-> [Results](#results-4) 19
->
-> [Least Privilege](#least-privilege) 20
->
-> [Explanation](#explanation-5) 21
->
-> [Results](#results-5) 22
->
-> [Activating TLS Listener](#activating-tls-listener) 22
->
-> [Explanation](#explanation-6) 23
->
-> [Results](#results-6) 24
->
-> [HTTPS Header Security](#https-header-security) 25
->
-> [Explanation](#explanation-7) 27
->
-> [Results](#results-7) 29
->
-> [Setting up Softwares](#setting-up-softwares) 30
->
-> [Installing Ansible](#installing-ansible) 30
->
-> [Linux:](#linux) 30
->
-> [MacOS:](#macos) 30
->
-> [Windows:](#windows) 30
->
-> [Installing Jenkins](#installing-jenkins) 31
->
+> [Design](#design) 
+> [Designing Playbooks](#designing-playbooks) 
+> [IaC Checks](#iac-checks) 
+> [Explanation](#explanation) 
+> [Results](#results) 
+> [Cloning](#cloning)
+> [Explanation](#explanation-1) 
+> [Results](#results-1) 
+> [HTTPd Installation](#httpd-installation) 
+> [Explanation](#explanation-2) 
+> [Results](#results-2) 
+> [Use HTTPS Only](#use-https-only) 
+> [Explanation](#explanation-3) 
+> [Results](#results-3) 
+> [Port Redirection](#port-redirection) 
+> [Explanation](#explanation-4)
+> [Results](#results-4)
+> [Least Privilege](#least-privilege)
+> [Explanation](#explanation-5)
+> [Results](#results-5)
+> [Activating TLS Listener](#activating-tls-listener)
+> [Explanation](#explanation-6)
+> [Results](#results-6)
+> [HTTPS Header Security](#https-header-security)
+> [Explanation](#explanation-7)
+> [Results](#results-7)
+> [Setting up Softwares](#setting-up-softwares)
+> [Installing Ansible](#installing-ansible)
+> [Linux:](#linux)
+> [MacOS:](#macos)
+> [Windows:](#windows) 
+> [Installing Jenkins](#installing-jenkins)
 > [Linux:](#linux-1) 31
->
 > [MacOS:](#macos-1) 31
->
 > [Windows:](#windows-1) 32
->
 > [Installing OWASP Dependency
 > Check](#installing-owasp-dependency-check) 33
->
 > [Linux:](#linux-2) 33
->
 > [MacOS:](#macos-2) 33
->
 > [Windows:](#windows-2) 33
->
 > [Integrating software with other
 > software](#integrating-software-with-other-software) 35
->
 > [Installing Ansible plugin
 > Jenkins](#installing-ansible-plugin-jenkins) 35
->
 > [Installing OWASP Dependency-Check Plugin On
 > Jenkins](#installing-owasp-dependency-check-plugin-on-jenkins) 36
->
 > [Installing Git plugin in Jenkins](#installing-git-plugin-in-jenkins)
-> 37
->
-> [Linux:](#linux-3) 37
->
-> [MacOS:](#macos-3) 37
->
-> [Windows:](#windows-3) 37
->
-> [Making all jobs in Jenkins](#making-all-jobs-in-jenkins) 39
->
-> [Results](#results-8) 40
->
-> [Results](#results-9) 40
->
-> [Designing the pipeline](#designing-the-pipeline) 41
->
-> [Testing & Results](#testing-results) 45
+> [Linux:](#linux-3) 
+> [MacOS:](#macos-3)
+> [Windows:](#windows-3) 
+> [Making all jobs in Jenkins](#making-all-jobs-in-jenkins) 
+> [Results](#results-8) 
+> [Results](#results-9) 
+> [Designing the pipeline](#designing-the-pipeline) 
+> [Testing & Results](#testing-results) 
 
 # **Scope Of Work**
 
@@ -211,175 +151,103 @@ Ansible to complete our pipeline.
 
 Starting with the code
 
+```yaml
 ---
-
-\- hosts: all
-
-vars:
-
-allowed_ssh_networks:
-
-\- 192.168.0.108/24
-
-unnecessary_services:
-
-\- postfix
-
-\- telnet.socket
-
-unnecessary_software:
-
-\- tcpdump
-
-\- nmap-ncat
-
-\- wpa_supplicant
-
-tasks:
-
-\- name: Allow incoming traffic on port 22
-
-firewalld:
-
-permanent: true
-
-zone: public
-
-port: 22/tcp
-
-state: enabled
-
-\- name: Add rule to allow SSH from 192.168.0.108
-
-ansible.builtin.iptables:
-
-chain: INPUT
-
-protocol: tcp
-
-destination_port: 22
-
-source: 192.168.0.108
-
-jump: ACCEPT
-
-state: present
-
-\- name: Add rule to allow Red Hat Web Controller from 192.168.0.108
-
-ansible.builtin.iptables:
-
-chain: INPUT
-
-protocol: tcp
-
-destination_port: 9090
-
-source: 192.168.0.108
-
-jump: ACCEPT
-
-state: present
-
-\- name: Add default deny rule for SSH
-
-ansible.builtin.iptables:
-
-chain: INPUT
-
-protocol: tcp
-
-destination_port: 22
-
-source: 0.0.0.0/0
-
-jump: REJECT
-
-state: present
-
-\- name: Add default deny rule for Red Hat Web Controller
-
-ansible.builtin.iptables:
-
-chain: INPUT
-
-protocol: tcp
-
-destination_port: 9090
-
-source: 0.0.0.0/0
-
-jump: REJECT
-
-state: present
-
-\- name: Reload firewalld
-
-shell: firewall-cmd --reload
-
-register: firewalld_reload
-
-\- name: Debug output
-
-debug:
-
-var: firewalld_reload
-
-\- name: Perform full patching
-
-package:
-
-name: '\*'
-
-state: latest
-
-\- name: Add hardened SSH config
-
-copy:
-
-dest: /etc/ssh/sshd_config
-
-src: /etc/ssh/sshd_config
-
-owner: root
-
-group: root
-
-mode: 0600
-
-notify: Reload SSH
-
-\- name: Remove undesirable packages
-
-package:
-
-name: "{{ unnecessary_software }}"
-
-state: absent
-
-\- name: Stop and disable unnecessary services
-
-service:
-
-name: "{{ item }}"
-
-state: stopped
-
-enabled: no
-
-with_items: "{{ unnecessary_services }}"
-
-ignore_errors: yes
-
-handlers:
-
-\- name: Reload SSH
-
-service:
-
-name: sshd
-
-state: reloaded
+- hosts: all
+  vars:
+    allowed_ssh_networks:
+      - 192.168.0.108/24
+    unnecessary_services:
+      - postfix
+      - telnet.socket
+    unnecessary_software:
+      - tcpdump
+      - nmap-ncat
+      - wpa_supplicant
+  tasks:
+    - name: Allow incoming traffic on port 22
+      firewalld:
+        permanent: true
+        zone: public
+        port: 22/tcp
+        state: enabled
+
+    - name: Add rule to allow SSH from 192.168.0.108
+      ansible.builtin.iptables:
+        chain: INPUT
+        protocol: tcp
+        destination_port: 22
+        source: 192.168.0.108
+        jump: ACCEPT
+        state: present
+
+    - name: Add rule to allow Red Hat Web Controller from 192.168.0.108
+      ansible.builtin.iptables:
+        chain: INPUT
+        protocol: tcp
+        destination_port: 9090
+        source: 192.168.0.108
+        jump: ACCEPT
+        state: present
+
+    - name: Add default deny rule for SSH
+      ansible.builtin.iptables:
+        chain: INPUT
+        protocol: tcp
+        destination_port: 22
+        source: 0.0.0.0/0
+        jump: REJECT
+        state: present
+
+    - name: Add default deny rule for Red Hat Web Controller
+      ansible.builtin.iptables:
+        chain: INPUT
+        protocol: tcp
+        destination_port: 9090
+        source: 0.0.0.0/0
+        jump: REJECT
+        state: present
+
+    - name: Reload firewalld
+      shell: firewall-cmd --reload
+      register: firewalld_reload
+
+    - name: Debug output
+      debug:
+        var: firewalld_reload
+
+    - name: Perform full patching
+      package:
+        name: '*'
+        state: latest
+
+    - name: Add hardened SSH config
+      copy:
+        dest: /etc/ssh/sshd_config
+        src: /etc/ssh/sshd_config
+        owner: root
+        group: root
+        mode: 0600
+        notify: Reload SSH
+
+    - name: Remove undesirable packages
+      package:
+        name: "{{ unnecessary_software }}"
+        state: absent
+
+    - name: Stop and disable unnecessary services
+      service:
+        name: "{{ item }}"
+        state: stopped
+        enabled: no
+      with_items: "{{ unnecessary_services }}"
+      ignore_errors: yes
+
+  handlers:
+    - name: Reload SSH
+      service:
+        name: sshd
+        state: reloaded
 
 #### **Explanation**
 
@@ -567,7 +435,7 @@ service:
 name: httpd
 
 state: restarted
-
+```
 #### **Explanation**
 
 This ansible-playbook is used to install the Apache HTTP server and
