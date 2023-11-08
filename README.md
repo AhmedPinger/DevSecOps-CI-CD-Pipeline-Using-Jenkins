@@ -182,7 +182,7 @@ Downloading an ISO of RHEL and installing the operating system in VMware
 17 Pro. I use only CLI-based Red Hat because it is easy to manage from
 its Web Interface and it's light as well.
 
-<img src="media/image3.png" style="width:6.5in;height:3.59722in" />
+<img src="[https://lh7-us.googleusercontent.com/0b6t4b3AMxQICaixhpmbVgUh-Gax8HcrmIPfZr-YX5RqU5Z6heEddEbZbPqDWRAJ1VaPgOrsdJBH-oNhGR7iv0QsgY5BRDj2ak6o94g5wSEuVWM-yIldcg66WWU0MSDqhxXDcbVD4tjNS2FdlEIj_h0]" style="width:6.5in;height:3.59722in" />
 
 ## 
 
