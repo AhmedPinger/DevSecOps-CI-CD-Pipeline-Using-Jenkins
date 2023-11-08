@@ -61,72 +61,126 @@ project which are listed below.
 
 **[Project Flow](#project-flow)** 
 
-> [Design](#design) 
-> [Designing Playbooks](#designing-playbooks) 
-> [IaC Checks](#iac-checks) 
-> [Explanation](#explanation) 
-> [Results](#results) 
+> [Design](#design)
+> 
+> [Designing Playbooks](#designing-playbooks)
+> 
+> [IaC Checks](#iac-checks)
+> 
+> [Explanation](#explanation)
+> 
+> [Results](#results)
+> 
 > [Cloning](#cloning)
-> [Explanation](#explanation-1) 
-> [Results](#results-1) 
-> [HTTPd Installation](#httpd-installation) 
-> [Explanation](#explanation-2) 
+>
+> [Explanation](#explanation-1)
+> 
+> [Results](#results-1)
+> 
+> [HTTPd Installation](#httpd-installation)
+> 
+> [Explanation](#explanation-2)
+> 
 > [Results](#results-2) 
-> [Use HTTPS Only](#use-https-only) 
-> [Explanation](#explanation-3) 
-> [Results](#results-3) 
-> [Port Redirection](#port-redirection) 
+>
+> [Use HTTPS Only](#use-https-only)
+> 
+> [Explanation](#explanation-3)
+> 
+> [Results](#results-3)
+> 
+> [Port Redirection](#port-redirection)
+> 
 > [Explanation](#explanation-4)
+> 
 > [Results](#results-4)
+> 
 > [Least Privilege](#least-privilege)
+> 
 > [Explanation](#explanation-5)
+> 
 > [Results](#results-5)
+> 
 > [Activating TLS Listener](#activating-tls-listener)
+> 
 > [Explanation](#explanation-6)
+> 
 > [Results](#results-6)
+> 
 > [HTTPS Header Security](#https-header-security)
+> 
 > [Explanation](#explanation-7)
+> 
 > [Results](#results-7)
+> 
 > [Setting up Softwares](#setting-up-softwares)
+> 
 > [Installing Ansible](#installing-ansible)
+> 
 > [Linux:](#linux)
+> 
 > [MacOS:](#macos)
-> [Windows:](#windows) 
+> 
+> [Windows:](#windows)
+> 
 > [Installing Jenkins](#installing-jenkins)
-> [Linux:](#linux-1) 31
-> [MacOS:](#macos-1) 31
-> [Windows:](#windows-1) 32
+> 
+> [Linux:](#linux-1) 
+> 
+> [MacOS:](#macos-1) 
+> 
+> [Windows:](#windows-1)
+> 
 > [Installing OWASP Dependency
-> Check](#installing-owasp-dependency-check) 33
-> [Linux:](#linux-2) 33
-> [MacOS:](#macos-2) 33
-> [Windows:](#windows-2) 33
+> 
+> Check](#installing-owasp-dependency-check)
+> 
+> [Linux:](#linux-2)
+> 
+> [MacOS:](#macos-2)
+> 
+> [Windows:](#windows-2)
+> 
 > [Integrating software with other
-> software](#integrating-software-with-other-software) 35
+> 
+> software](#integrating-software-with-other-software)
+> 
 > [Installing Ansible plugin
-> Jenkins](#installing-ansible-plugin-jenkins) 35
+> 
+> Jenkins](#installing-ansible-plugin-jenkins)
+> 
 > [Installing OWASP Dependency-Check Plugin On
-> Jenkins](#installing-owasp-dependency-check-plugin-on-jenkins) 36
+> 
+> Jenkins](#installing-owasp-dependency-check-plugin-on-jenkins)
+> 
 > [Installing Git plugin in Jenkins](#installing-git-plugin-in-jenkins)
-> [Linux:](#linux-3) 
+> 
+> [Linux:](#linux-3)
+> 
 > [MacOS:](#macos-3)
-> [Windows:](#windows-3) 
-> [Making all jobs in Jenkins](#making-all-jobs-in-jenkins) 
-> [Results](#results-8) 
-> [Results](#results-9) 
-> [Designing the pipeline](#designing-the-pipeline) 
+> 
+> [Windows:](#windows-3)
+> 
+> [Making all jobs in Jenkins](#making-all-jobs-in-jenkins)
+> 
+> [Results](#results-8)
+> 
+> [Results](#results-9)
+> 
+> [Designing the pipeline](#designing-the-pipeline)
+> 
 > [Testing & Results](#testing-results) 
 
 # **Scope Of Work**
 
-| Sr. No. | Tasks                         | Pass/Fail | Comments |
-|---------|-------------------------------|-----------|----------|
-| 1       | Network Design                |           |          |
-| 2       | Designing Playbooks           |           |          |
-| 3       | Software Setup                |           |          |
-| 4       | Integrate With Other Software |           |          |
-| 5       | Making Jobs In Jenkins        |           |          |
-| 6       | Making Pipeline               |           |          |
+| Sr. No. | Tasks                         | Comments |
+|---------|-------------------------------|----------|
+| 1       | Network Design                |          |          
+| 2       | Designing Playbooks           |          |          
+| 3       | Software Setup                |          |          
+| 4       | Integrate With Other Software |          |          
+| 5       | Making Jobs In Jenkins        |          |          
+| 6       | Making Pipeline               |          |         
 
 # **Project Flow**
 
@@ -248,7 +302,7 @@ Starting with the code
       service:
         name: sshd
         state: reloaded
-
+```
 #### **Explanation**
 
 This Ansible playbook is used to configure the firewall and SSH settings
@@ -297,7 +351,7 @@ modified.
 ### **Cloning**
 
 Starting with the code
-
+```yaml
 ---
 
 \- hosts: all
@@ -316,12 +370,12 @@ state: present
 
 git:
 
-repo: https://github.com/AhmedPinger/Vulnerable-WebApp.git
+repo: https://github.com/AhmedPinger/DevSecOps-CI-CD-Pipeline-Using-Jenkins/Vulnerable-WebApp.git
 
 dest: /var/www/html
 
 force: true
-
+```
 #### **Explanation**
 
 This Ansible playbook is used to install the git package and clone a git
@@ -347,7 +401,7 @@ git repository onto a group of servers.
 ### **HTTPd Installation**
 
 Starting with the code
-
+```yaml
 ---
 
 # This playbook installs the Apache HTTP server
@@ -375,7 +429,7 @@ service:
 name: httpd
 
 state: started
-
+```
 #### **Explanation**
 
 This ansible-playbook is used to install the Apache HTTP server on a
@@ -399,7 +453,7 @@ it is running on a group of Linux servers.
 ### **Use HTTPS Only**
 
 Starting with the code
-
+```yaml
 ---
 
 \- hosts: all
@@ -463,7 +517,7 @@ HTTPS on a group of servers.
 ### **Port Redirection**
 
 Starting with the code
-
+```yaml
 ---
 
 \- hosts: all
@@ -495,7 +549,7 @@ service:
 name: httpd
 
 state: restarted
-
+```
 #### **Explanation**
 
 This ansible-playbook is used to install the Apache HTTP server and
@@ -524,7 +578,7 @@ port it listens on to 8080 on a group of servers.
 ### **Least Privilege**
 
 Starting with the code
-
+```
 ---
 
 \- hosts: all
@@ -572,7 +626,7 @@ service:
 name: httpd
 
 state: restarted
-
+```
 #### **Explanation**
 
 This ansible-playbook is used to set up the Apache HTTP server to run as
@@ -608,7 +662,7 @@ to gain access to the system.
 ### **Activating TLS Listener**
 
 Starting with the code
-
+```yaml
 ---
 
 \- hosts: all
@@ -656,7 +710,7 @@ service:
 name: httpd
 
 state: restarted
-
+```
 #### **Explanation**
 
 This ansible-playbook is used to install the Apache HTTP server and
@@ -690,7 +744,7 @@ on a group of servers.
 ### **HTTPS Header Security**
 
 Starting with the code
-
+```yaml
 ---
 
 \- name: Configure HTTP header security
@@ -797,7 +851,7 @@ service:
 name: httpd
 
 state: restarted
-
+```
 #### **Explanation**
 
 This ansible-playbook is used to configure security headers for the
@@ -1269,106 +1323,67 @@ Now we will be making a pipeline to run all of these playbooks in one
 build.
 
 Starting with the pipeline code.
-
+```groovy
 pipeline {
+    agent any
 
-agent any
+    stages {
+        stage('Performing IaC Checks') {
+            steps {
+                build 'IaC Checks'
+            }
+        }
 
-stages {
+        stage('Cloning Project Repository') {
+            steps {
+                build 'Cloning'
+            }
+        }
 
-stage('Performing IaC Checks') {
+        stage('httpd Installation') {
+            steps {
+                build 'HTTPd Installation'
+            }
+        }
 
-steps {
+        stage('Applying Setting to Only use HTTP') {
+            steps {
+                build 'Use Only HTTPS'
+            }
+        }
 
-build 'IaC Checks'
+        stage('Doing Port Redirection') {
+            steps {
+                build 'Port Redirection'
+            }
+        }
 
+        stage('Applying Least Privilage') {
+            steps {
+                build 'HTTP Least Privilege'
+            }
+        }
+
+        stage('Activating TLS Listener') {
+            steps {
+                build 'HTTP TLS listener'
+            }
+        }
+
+        stage('Applying HTTP Header Security') {
+            steps {
+                build 'HTTP Header security'
+            }
+        }
+
+        stage('Performing Dependency Check') {
+            steps {
+                build 'Perform Dependency Check'
+            }
+        }
+    }
 }
-
-}
-
-stage('Cloning Project Repository') {
-
-steps {
-
-build 'Cloning'
-
-}
-
-}
-
-stage('httpd Installation') {
-
-steps {
-
-build 'HTTPd Installation'
-
-}
-
-}
-
-stage('Applying Setting to Only use HTTP') {
-
-steps {
-
-build 'Use Only HTTPS'
-
-}
-
-}
-
-stage('Doing Port Redirection') {
-
-steps {
-
-build 'Port Redirection'
-
-}
-
-}
-
-stage('Applying Least Privilage') {
-
-steps {
-
-build 'HTTP Least Privilege'
-
-}
-
-}
-
-stage('Activating TLS Listener') {
-
-steps {
-
-build 'HTTP TLS listener'
-
-}
-
-}
-
-stage('Applying HTTP Header Security') {
-
-steps {
-
-build 'HTTP Header security'
-
-}
-
-}
-
-stage('Performing Dependency Check') {
-
-steps {
-
-build 'Perform Dependency Check'
-
-}
-
-}
-
-}
-
-}
+```
 
 This is a Jenkins pipeline script that defines a pipeline with nine
 stages. Each stage represents a task that the pipeline will perform.
@@ -1422,7 +1437,7 @@ This pipeline can be executed by running the pipeline job in Jenkins.
 <img src="media/image9.png" style="width:6.5in;height:2.34722in" />
 
 We have a full-stage view of the pipeline where all stages of the
-pipeline are executed successfully.
+pipeline is executed successfully.
 
 And we have the deployed website as well
 
