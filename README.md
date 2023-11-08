@@ -131,9 +131,7 @@ project which are listed below.
 > 
 > [Windows:](#windows-1)
 > 
-> [Installing OWASP Dependency
-> 
-> Check](#installing-owasp-dependency-check)
+> [Installing OWASP Dependency Check](#installing-owasp-dependency-check)
 > 
 > [Linux:](#linux-2)
 > 
@@ -141,17 +139,11 @@ project which are listed below.
 > 
 > [Windows:](#windows-2)
 > 
-> [Integrating software with other
+> [Integrating software with other software](#integrating-software-with-other-software)
 > 
-> software](#integrating-software-with-other-software)
+> [Installing Ansible plugin Jenkins](#installing-ansible-plugin-jenkins)
 > 
-> [Installing Ansible plugin
-> 
-> Jenkins](#installing-ansible-plugin-jenkins)
-> 
-> [Installing OWASP Dependency-Check Plugin On
-> 
-> Jenkins](#installing-owasp-dependency-check-plugin-on-jenkins)
+> [Installing OWASP Dependency-Check Plugin On Jenkins](#installing-owasp-dependency-check-plugin-on-jenkins)
 > 
 > [Installing Git plugin in Jenkins](#installing-git-plugin-in-jenkins)
 > 
@@ -173,14 +165,14 @@ project which are listed below.
 
 # **Scope Of Work**
 
-| Sr. No. | Tasks                         | Comments |
-|---------|-------------------------------|----------|
-| 1       | Network Design                |          |          
-| 2       | Designing Playbooks           |          |          
-| 3       | Software Setup                |          |          
-| 4       | Integrate With Other Software |          |          
-| 5       | Making Jobs In Jenkins        |          |          
-| 6       | Making Pipeline               |          |         
+| Sr. No. | Tasks                         |
+|---------|-------------------------------|
+| 1       | Network Design                |          
+| 2       | Designing Playbooks           |               
+| 3       | Software Setup                |                    
+| 4       | Integrate With Other Software |                    
+| 5       | Making Jobs In Jenkins        |                    
+| 6       | Making Pipeline               |                   
 
 # **Project Flow**
 
