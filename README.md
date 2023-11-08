@@ -4,14 +4,9 @@
 
 # **Introduction**
 
-Securing web applications is today's most common aspect of securing the
-enterprise. Web application hacking is on the rise with as many as 80%
-of cyber-attacks done at the web application level. The OWASP foundation
-provides the top 10 vulnerabilities which are the most common and the
-most critical from top to bottom.
+Securing web applications is today's most common aspect of securing the enterprise. Web application hacking is on the rise with as many as 80% of cyber-attacks done at the web application level. The OWASP foundation provides the top 10 vulnerabilities which are the most common and the most critical from top to bottom.
 
-So, in this project, we will be looking over some of the vulnerabilities
-and deploying an automated Web Application with all security checks.
+So, in this project, we will be looking over some of the vulnerabilities and deploying an automated Web Application with all security checks.
 
 Some major software and frameworks used in the project are listed below.
 
@@ -23,8 +18,7 @@ Some major software and frameworks used in the project are listed below.
 
 # **Project Implementation Plan**
 
-We will be having a total of 6 steps in the deployment of the whole
-project which are listed below.
+We will be having a total of 6 steps in the deployment of the whole project which are listed below.
 
 -   Design
 
@@ -178,9 +172,7 @@ project which are listed below.
 
 ## **Design**
 
-Downloading an ISO of RHEL and installing the operating system in VMware
-17 Pro. I use only CLI-based Red Hat because it is easy to manage from
-its Web Interface and it's light as well.
+Downloading an ISO of RHEL and installing the operating system in VMware 17 Pro. I use only CLI-based Red Hat because it is easy to manage from its Web Interface and it's light as well.
 
 <img src="https://lh7-us.googleusercontent.com/0b6t4b3AMxQICaixhpmbVgUh-Gax8HcrmIPfZr-YX5RqU5Z6heEddEbZbPqDWRAJ1VaPgOrsdJBH-oNhGR7iv0QsgY5BRDj2ak6o94g5wSEuVWM-yIldcg66WWU0MSDqhxXDcbVD4tjNS2FdlEIj_h0" style="width:6.5in;height:3.59722in" />
 
@@ -188,10 +180,7 @@ its Web Interface and it's light as well.
 
 ## **Designing Playbooks**
 
-We have a total of 9 steps in the pipeline, but the one in which the
-dependency check will be done from Jenkins only! it does not require the
-playbook to be written for it. So we will be writing 8 playbooks of
-Ansible to complete our pipeline.
+We have a total of 9 steps in the pipeline, but the one in which the dependency check will be done from Jenkins only! it does not require the playbook to be written for it. So we will be writing playbooks of Ansible to complete our pipeline.
 
 ### **IaC Checks**
 
@@ -297,44 +286,30 @@ Starting with the code
 ```
 #### **Explanation**
 
-This Ansible playbook is used to configure the firewall and SSH settings
-on a group of servers (indicated by the hosts: all line). It also
-performs some system maintenance tasks such as patching and removing
-unnecessary software and services.
+This Ansible playbook is used to configure the firewall and SSH settings on a group of servers (indicated by the hosts: all line). It also performs some system maintenance tasks such as patching and removing unnecessary software and services.
 
 Here is a breakdown of the tasks in the playbook:
 
--   The first task allows incoming traffic on port 22 and adds a rule to
-    > allow SSH connections from the IP address 192.168.0.108. This is
-    > done using the firewalld and ansible.builtin.iptables modules.
+-   The first task allows incoming traffic on port 22 and adds a rule to allow SSH connections from the IP address 192.168.0.108. This is done using the firewalld and ansible.builtin.iptables modules.
 
--   The second task adds a rule to allow incoming traffic on port 9090
-    > from the IP address 192.168.0.108. This is used for the Red Hat
-    > Web Controller.
+-   The second task adds a rule to allow incoming traffic on port 9090 from the IP address 192.168.0.108. This is used for the Red Hat web Controller.
 
--   The third task adds default deny rules for both SSH and the Red Hat
-    > Web Controller. This means that any incoming traffic on these
-    > ports from any IP address will be rejected.
+-   The third task adds default deny rules for both SSH and the Red Hat Web Controller. This means that any incoming traffic on these ports from any IP address will be rejected.
+  
+-   The fourth task reloads the firewalld service using the shell module.
 
--   The fourth task reloads the firewalld service using the shell
-    > module.
-
--   The fifth task is a debug task that outputs the result of the
-    > firewalld reload command.
+-   The fifth task is a debug task that outputs the result of the firewalld reload command install packages to the latest version.
 
 -   The sixth task performs a full system patching by upgrading all
-    > installed packages to the latest version.
-
--   The seventh task adds a hardened SSH configuration file to the
-    > server.
+   
+-   The seventh task adds a hardened SSH configuration file to the server.
 
 -   The eighth task removes unnecessary software packages.
 
 -   The ninth task stops and disables unnecessary services.
 
-Finally, the playbook includes a handler called "Reload SSH" which is
-used to reload the SSH service after the SSH configuration file is
-modified.
+Finally, the playbook includes a handler called "Reload SSH" which is used to reload the SSH service after the SSH configuration file is modified.
+
 
 #### **Results**
 
@@ -343,6 +318,7 @@ modified.
 ### **Cloning**
 
 Starting with the code
+
 ```yaml
 ---
 
@@ -370,21 +346,16 @@ force: true
 ```
 #### **Explanation**
 
-This Ansible playbook is used to install the git package and clone a git
-repository onto a group of servers (indicated by the hosts: all line).
+This Ansible playbook is used to install the git package and clone a git repository onto a group of servers (indicated by the hosts: all line).
 
 Here is a breakdown of the tasks in the playbook:
 
 -   The first task installs the git package using the yum module.
 
--   The second task clones the git repository located at
-    > https://github.com/AhmedPinger/Vulnerable-WebApp.git to the
-    > /var/www/html directory on the servers. The force option is set to
-    > true which means that the clone will overwrite any existing files
-    > in the destination directory.
+-   The second task clones the git repository located at https://github.com/AhmedPinger/Vulnerable-WebApp.git to the /var/www/html directory on the servers. The force option is set to true which means that the clone will overwrite any existing files in the destination directory.
 
-Overall, this playbook installs the git package and clones a specific
-git repository onto a group of servers.
+Overall, this playbook installs the git package and clones a specific git repository onto a group of servers.
+
 
 #### **Results**
 
@@ -393,6 +364,7 @@ git repository onto a group of servers.
 ### **HTTPd Installation**
 
 Starting with the code
+
 ```yaml
 ---
 
@@ -424,19 +396,15 @@ state: started
 ```
 #### **Explanation**
 
-This ansible-playbook is used to install the Apache HTTP server on a
-group of Linux servers.
+This ansible-playbook is used to install the Apache HTTP server on a group of Linux servers.
 
 Here is a breakdown of the tasks in the playbook:
 
--   The first task installs the httpd package using the yum module. This
-    > package includes the Apache HTTP server.
+-   The first task installs the httpd package using the yum module. This package includes the Apache HTTP server.
 
--   The second task starts with the Apache HTTP server using the service
-    > module.
+-   The second task starts with the Apache HTTP server using the service module.
 
-Overall, this playbook installs the Apache HTTP server and ensures that
-it is running on a group of Linux servers.
+Overall, this playbook installs the Apache HTTP server and ensures that it is running on a group of Linux servers.
 
 #### **Results**
 
@@ -484,23 +452,17 @@ state: restarted
 ```
 #### **Explanation**
 
-This ansible-playbook is used to install the Apache HTTP server and
-disable HTTPS on a group of servers.
+This ansible-playbook is used to install the Apache HTTP server and disable HTTPS on a group of servers.
 
 Here is a breakdown of the tasks in the playbook:
 
--   The first task installs the httpd package using the yum module. This
-    > package includes the Apache HTTP server.
+-   The first task installs the httpd package using the yum module. This package includes the Apache HTTP server.
 
--   The second task edits the Apache configuration file (located at
-    > /etc/httpd/conf/httpd.conf) to disable HTTPS by commenting out the
-    > Listen 443 line. This is done using the lineinfile module.
+-   The second task edits the Apache configuration file (located at /etc/httpd/conf/httpd.conf) to disable HTTPS by commenting out the Listen 443 line. This is done using the lineinfile module.
 
--   The third task restarts the Apache HTTP server using the service
-    > module.
+-   The third task restarts the Apache HTTP server using the service module.
 
-Overall, this playbook installs the Apache HTTP server and disables
-HTTPS on a group of servers.
+Overall, this playbook installs the Apache HTTP server and disables HTTPS on a group of servers.
 
 #### **Results**
 
@@ -544,24 +506,18 @@ state: restarted
 ```
 #### **Explanation**
 
-This ansible-playbook is used to install the Apache HTTP server and
-change the port it listens on to 8080 on a group of servers.
+This ansible-playbook is used to install the Apache HTTP server and change the port it listens on to 8080 on a group of servers.
 
 Here is a breakdown of the tasks in the playbook:
 
--   The first task installs the httpd package using the package module.
-    > This package includes the Apache HTTP server.
+-   The first task installs the httpd package using the package module. This package includes the Apache HTTP server.
 
--   The second task updates the Apache configuration file (located at
-    > /etc/httpd/conf/httpd.conf) to change the port that the server
-    > listens on from 80 to 8080. This is done using the lineinfile
-    > module.
+-   The second task updates the Apache configuration file (located at /etc/httpd/conf/httpd.conf) to change the port that the server listens on from 80 to 8080. This is done using the lineinfile module.
 
--   The third task restarts the Apache HTTP server using the service
-    > module to apply the configuration changes.
+-   The third task restarts the Apache HTTP server using the service module to apply the configuration changes.
 
-Overall, this playbook installs the Apache HTTP server and changes the
-port it listens on to 8080 on a group of servers.
+Overall, this playbook installs the Apache HTTP server and changes the port it listens on to 8080 on a group of servers.
+
 
 #### **Results**
 
@@ -628,24 +584,14 @@ Here is a breakdown of the tasks in the playbook:
 
 -   The first task creates the http group using the group module.
 
--   The second task creates the http user and assigns it to the http
-    > group using the user module. The system option is set to yes to
-    > indicate that this is a system user.
+-   The second task creates the http user and assigns it to the HTTP group using the user module. The system option is set to yes to indicate that this is a system user.
+    
+-   The third task sets the correct permissions on the web root directory (/var/www/html) using the file module. The owner is set to the http user and the group is set to the http group. The mode option sets the permissions to allow the owner and group to read, write, and execute the files, and allows other users to only read and execute the files.
 
--   The third task sets the correct permissions on the web root
-    > directory (/var/www/html) using the file module. The owner is set
-    > to the http user and the group is set to the http group. The mode
-    > option sets the permissions to allow the owner and group to read,
-    > write, and execute the files, and allows other users to only read
-    > and execute the files.
+-   The fourth task restarts the Apache HTTP server using the service module to apply the configuration changes.
+  
+Overall, this playbook sets up the Apache HTTP server to run as a non-root user on a group of servers. This is a security best practice as it reduces the risk of vulnerabilities in the web server being exploited to gain access to the system.
 
--   The fourth task restarts the Apache HTTP server using the service
-    > module to apply the configuration changes.
-
-Overall, this playbook sets up the Apache HTTP server to run as a
-non-root user on a group of servers. This is a security best practice as
-it reduces the risk of vulnerabilities in the web server being exploited
-to gain access to the system.
 
 #### **Results**
 
@@ -705,29 +651,19 @@ state: restarted
 ```
 #### **Explanation**
 
-This ansible-playbook is used to install the Apache HTTP server and
-enable HTTPS on a group of servers.
+This ansible-playbook is used to install the Apache HTTP server and enable HTTPS on a group of servers.
 
 Here is a breakdown of the tasks in the playbook:
 
--   The first task installs the httpd package using the yum module. This
-    > package includes the Apache HTTP server.
+-   The first task installs the httpd package using the yum module. This package includes the Apache HTTP server.
 
--   The second task starts the Apache HTTP server and sets it to start
-    > automatically at boot time using the service module.
+-   The second task starts the Apache HTTP server and sets it to start automatically at boot time using the service module.
 
--   The third task enables the HTTPS listener in the Apache
-    > configuration by adding a Listen 443 line to the
-    > /etc/httpd/conf.d/ssl.conf file using the lineinfile module. This
-    > causes the Apache HTTP server to listen for HTTPS traffic on port
-    > 443.
+-   The third task enables the HTTPS listener in the Apache configuration by adding a Listen 443 line to the /etc/httpd/conf.d/ssl.conf file using the lineinfile module. This causes the Apache HTTP server to listen for HTTPS traffic on port 443.
+    
+-   The playbook includes a handler called "restart apache" which is used to restart the Apache HTTP server after the configuration is modified. 
 
--   The playbook includes a handler called "restart apache" which is
-    > used to restart the Apache HTTP server after the configuration is
-    > modified.
-
-Overall, this playbook installs the Apache HTTP server and enables HTTPS
-on a group of servers.
+Overall, this playbook installs the Apache HTTP server and enables HTTPS on a group of servers.
 
 #### **Results**
 
@@ -846,51 +782,31 @@ state: restarted
 ```
 #### **Explanation**
 
-This ansible-playbook is used to configure security headers for the
-Apache HTTP server on a group of Linux servers.
+This ansible-playbook is used to configure security headers for the Apache HTTP server on a group of Linux servers.
 
 Here is a breakdown of the tasks in the playbook:
 
--   The first task installs the httpd package using the yum module. This
-    > package includes the Apache HTTP server.
+-   The first task installs the httpd package using the yum module. This package includes the Apache HTTP server.
 
--   The second task starts with the Apache HTTP server using the service
-    > module.
+-   The second task starts with the Apache HTTP server using the service module.
 
--   The next five tasks use the lineinfile module to modify the Apache
-    > configuration file (/etc/httpd/conf/httpd.conf) to set various
-    > HTTP headers. These headers are used to improve the security of
-    > the server and protect against various types of attacks.
+-   The next five tasks use the lineinfile module to modify the Apache configuration file (/etc/httpd/conf/httpd.conf) to set various HTTP headers. These headers are used to improve the security of the server and protect against various types of attacks.
 
--   The ServerTokens directive is set to Prod to reduce the amount of
-    > information that the server reveals about itself in the Server
-    > header.
+-   The ServerTokens directive is set to Prod to reduce the amount of information that the server reveals about itself in the Server header.
+   
+-   The ServerSignature directive is set to Off to disable the display of the server version and OS in the server-generated pages (e.g., error pages).
 
--   The ServerSignature directive is set to Off to disable the display
-    > of the server version and OS in the server-generated pages (e.g.,
-    > error pages).
+-   The X-Frame-Options header is set to SAMEORIGIN to prevent the server's content from being embedded in a frame or iframe on another site.
 
--   The X-Frame-Options header is set to SAMEORIGIN to prevent the
-    > server's content from being embedded in a frame or iframe on
-    > another site.
+-   The X-XSS-Protection header is set to 1; mode=block to enable the browser's built-in XSS protection.
 
--   The X-XSS-Protection header is set to 1; mode=block to enable the
-    > browser's built-in XSS protection.
+-   The X-Content-Type-Options header is set to nosniff to prevent the  browser from MIME-sniffing the content type.
+  
+-   The Strict-Transport-Security header is set to max-age=31536000; includeSubDomains to enable HSTS and enforce the use of HTTPS for all subdomains.
 
--   The X-Content-Type-Options header is set to nosniff to prevent the
-    > browser from MIME-sniffing the content type.
+-   The final task restarts the Apache HTTP server using the service module to apply the configuration changes.
 
--   The Strict-Transport-Security header is set to max-age=31536000;
-    > includeSubDomains to enable HSTS and enforce the use of HTTPS for
-    > all subdomains.
-
--   The final task restarts the Apache HTTP server using the service
-    > module to apply the configuration changes.
-
-Overall, this playbook configures various security headers for the
-Apache HTTP server on a group of Linux servers. These headers can help
-to protect against various types of attacks and improve the overall
-security of the server.
+Overall, this playbook configures various security headers for the Apache HTTP server on a group of Linux servers. These headers can help to protect against various types of attacks and improve the overall security of the server.
 
 #### 
 
@@ -902,20 +818,15 @@ security of the server.
 
 ### **Installing Ansible**
 
-To install Ansible on a machine, you will need to have Python installed
-on your system. If you don't have Python installed, you can install it
-by following the instructions for your operating system:
+To install Ansible on a machine, you will need to have Python installed on your system. If you don't have Python installed, you can install it by following the instructions for your operating system:
 
 #### **Linux:**
 
-Most Linux distributions come with Python pre-installed. You can check
-if Python is installed on your system by running the following command:
+Most Linux distributions come with Python pre-installed. You can check if Python is installed on your system by running the following command:
 
 **python3 --version**
 
-If Python is not installed, you can install it using your distribution's
-package manager. For example, on Ubuntu, you can use apt-get to install
-Python:
+If Python is not installed, you can install it using your distribution's package manager. For example, on Ubuntu, you can use apt-get to install Python:
 
 **sudo apt-get update**
 
@@ -923,31 +834,23 @@ Python:
 
 #### **MacOS:**
 
-Python is pre-installed on MacOS. You can check if Python is installed
-by running the following command:
+Python is pre-installed on MacOS. You can check if Python is installed by running the following command:
 
 **python3 --version**
 
-If Python is not installed, you can install it using the brew package
-manager:
+If Python is not installed, you can install it using the brew package manager:
 
 **brew install python**
 
 #### **Windows:**
 
-To install Python on Windows, you can download the Python installer from
-the official Python website
-(<https://www.python.org/downloads/windows/>) and run it.
+To install Python on Windows, you can download the Python installer from the official Python website (<https://www.python.org/downloads/windows/>) and run it.
 
-Once you have Python installed, you can install Ansible using pip, the
-Python package manager. To install Ansible using pip, open a terminal or
-command prompt and run the following command:
+Once you have Python installed, you can install Ansible using pip, the Python package manager. To install Ansible using pip, open a terminal or command prompt and run the following command:
 
 **pip install ansible**
 
-This will install the latest version of Ansible. If you want to install
-a specific version of Ansible, you can specify the version number by
-running the following command:
+This will install the latest version of Ansible. If you want to install a specific version of Ansible, you can specify the version number by running the following command:
 
 pip install ansible==2.9
 
@@ -955,22 +858,17 @@ Replace 2.9 with the version number you want to install.
 
 ### **Installing Jenkins**
 
-To install Jenkins, you will need to have Java installed on your system.
-Jenkins is a Java-based application, so you will need to have a recent
-version of Java installed to run it.
+To install Jenkins, you will need to have Java installed on your system. Jenkins is a Java-based application, so you will need to have a recent version of Java installed to run it.
 
-You can check if Java is installed on your system by running the
-following command:
+You can check if Java is installed on your system by running the following command:
 
 **java -version**
 
-If Java is not installed, you can install it by following the
-instructions for your operating system:
+If Java is not installed, you can install it by following the instructions for your operating system:
 
 #### **Linux:**
 
-On Linux, you can install Java using your distribution's package
-manager. For example, on Ubuntu, you can use apt-get to install Java:
+On Linux, you can install Java using your distribution's package manager. For example, on Ubuntu, you can use apt-get to install Java:
 
 **sudo apt-get update**
 
@@ -984,30 +882,24 @@ On MacOS, you can install Java using the brew package manager:
 
 #### **Windows:**
 
-On Windows, you can download the Java installer from the official Java
-website (<https://www.java.com/en/download/>) and run it.
+On Windows, you can download the Java installer from the official Java website (<https://www.java.com/en/download/>) and run it.
 
 Once you have Java installed, you can install Jenkins by following these
 steps:
 
--   Download the latest version of Jenkins from the official Jenkins
-    > website (<https://jenkins.io/download/>).
+-   Download the latest version of Jenkins from the official Jenkins website (<https://jenkins.io/download/>).
 
 -   Extract the downloaded file to a directory on your machine.
 
--   Open a terminal or command prompt and navigate to the directory
-    > where you extracted Jenkins.
-
+-   Open a terminal or command prompt and navigate to the directory where you extracted Jenkins.
+    
 -   Run the following command to start Jenkins:
 
 **java -jar jenkins.war**
 
-This will start the Jenkins server and listen on port 8080. You can
-access the Jenkins dashboard by opening a web browser and navigating to
-http://localhost:8080.
+This will start the Jenkins server and listen on port 8080. You can access the Jenkins dashboard by opening a web browser and navigating to **http://localhost:8080**.
 
-If you want to run Jenkins as a daemon in the background, you can use
-the --daemon flag:
+If you want to run Jenkins as a daemon in the background, you can use the --daemon flag:
 
 **java -jar jenkins.war --daemon**
 
@@ -1019,24 +911,17 @@ Replace 8080 with the port number you want to use.
 
 ### **Installing OWASP Dependency Check**
 
-OWASP Dependency Check is a tool that helps you identify known
-vulnerabilities in the third-party libraries and dependencies that your
-project relies on. It can be used to scan your project's dependencies
-and generate a report of any vulnerabilities that it finds.
+OWASP Dependency Check is a tool that helps you identify known vulnerabilities in the third-party libraries and dependencies that your project relies on. It can be used to scan your project's dependencies and generate a report of any vulnerabilities that it finds.
 
-To install OWASP Dependency Check, you will need to have Java installed
-on your system. You can check if Java is installed by running the
-following command:
+To install OWASP Dependency Check, you will need to have Java installed on your system. You can check if Java is installed by running the following command:
 
 **java -version**
 
-If Java is not installed, you can install it by following the
-instructions for your operating system:
+If Java is not installed, you can install it by following the instructions for your operating system:
 
 #### **Linux:**
 
-On Linux, you can install Java using your distribution's package
-manager. For example, on Ubuntu, you can use apt-get to install Java:
+On Linux, you can install Java using your distribution's package manager. For example, on Ubuntu, you can use apt-get to install Java:
 
 **sudo apt-get update**
 
@@ -1050,29 +935,21 @@ On MacOS, you can install Java using the brew package manager:
 
 #### **Windows:**
 
-On Windows, you can download the Java installer from the official Java
-website (<https://www.java.com/en/download/>) and run it.
+On Windows, you can download the Java installer from the official Java website (<https://www.java.com/en/download/>) and run it.
 
-Once you have Java installed, you can install OWASP Dependency Check by
-following these steps:
+Once you have Java installed, you can install OWASP Dependency Check by following these steps:
 
--   Download the latest version of OWASP Dependency Check from the
-    > official OWASP website
-    > (<https://www.owasp.org/index.php/OWASP_Dependency_Check>).
+-   Download the latest version of OWASP Dependency Check from the official OWASP website (<https://www.owasp.org/index.php/OWASP_Dependency_Check>).
 
 -   Extract the downloaded file to a directory on your machine.
 
--   Open a terminal or command prompt and navigate to the directory
-    > where you extracted OWASP Dependency Check.
-
+-   Open a terminal or command prompt and navigate to the directory where you extracted OWASP Dependency Check.
+    
 -   Run the following command to scan your project's dependencies:
 
-**dependency-check.sh --project \<project_name> --scan
-\<path_to_project>**
+**dependency-check.sh --project \<project_name> --scan \<path_to_project>**
 
-Replace \<project_name> with the name of your project and
-\<path_to_project> with the path to your project. This will generate a
-report in HTML format, which you can view in a web browser.
+Replace \<project_name> with the name of your project and \<path_to_project> with the path to your project. This will generate a report in HTML format, which you can view in a web browser.
 
 ## **Integrating software with other software**
 
@@ -1093,75 +970,57 @@ To install the Ansible plugin on Jenkins, follow these steps:
 
 -   Click on the "Install without restart" button to install the plugin.
 
-Once the plugin is installed, you can use it to run Ansible tasks as
-part of your Jenkins builds. To do this, you will need to have Ansible
-installed on your Jenkins server. You can install Ansible by following
-the instructions in my previous answer.
+Once the plugin is installed, you can use it to run Ansible tasks as part of your Jenkins builds. To do this, you will need to have Ansible installed on your Jenkins server. You can install Ansible by following the instructions in my previous answer.
 
 To use the Ansible plugin, follow these steps:
 
 -   Create a new Jenkins job for your project.
 
--   In the "Build" section of the job configuration, click on the "Add
-    > build step" button and select "Invoke Ansible Playbook".
+-   In the "Build" section of the job configuration, click on the "Add build step" button and select "Invoke Ansible Playbook".
 
--   In the "Playbook Path" field, enter the path to your ansible
-    > playbook.
+-   In the "Playbook Path" field, enter the path to your ansible playbook.
 
 -   In the "Inventory" field, enter the path to your inventory file.
 
--   In the "Limit" field, enter the hosts or host patterns to run the
-    > playbook on.
+-   In the "Limit" field, enter the hosts or host patterns to run the playbook on.
 
 -   Click on the "Save" button to save the job configuration.
 
-When you build the job, the plugin will run your ansible playbook using
-the specified inventory and host limit.
+When you build the job, the plugin will run your ansible playbook using the specified inventory and host limit.
 
 ### **Installing OWASP Dependency-Check Plugin On Jenkins**
 
-To install the OWASP Dependency Check plugin on Jenkins, follow these
-steps:
+To install the OWASP Dependency Check plugin on Jenkins, follow these steps:
 
 -   Log in to the Jenkins dashboard as an administrator.
 
--   Click on the "Manage Jenkins" menu item, and then click on the
-    > "Manage Plugins" option.
+-   Click on the "Manage Jenkins" menu item, and then click on the "Manage Plugins" option.
 
 -   Click on the "Available" tab.
 
 -   In the "Filter" field, enter "OWASP Dependency Check".
 
--   Select the "OWASP Dependency-Check Plugin" from the list of
-    > available plugins.
+-   Select the "OWASP Dependency-Check Plugin" from the list of available plugins.
 
 -   Click on the "Install without restart" button to install the plugin.
 
 Once the plugin is installed, you have to do some more configuration.
 
--   Download the latest version of OWASP Dependency Check from the
-    > official OWASP website
-    > (<https://www.owasp.org/index.php/OWASP_Dependency_Check>).
+-   Download the latest version of OWASP Dependency Check from the official OWASP website (<https://www.owasp.org/index.php/OWASP_Dependency_Check>).
 
 -   Extract the downloaded file to a directory on your Jenkins server.
 
--   In the Jenkins dashboard, click on the "Manage Jenkins" menu item,
-    > and then click on the "Global Tool Configuration" option.
+-   In the Jenkins dashboard, click on the "Manage Jenkins" menu item, and then click on the "Global Tool Configuration" option.
 
 -   Scroll down to the "OWASP Dependency Check" section.
 
--   In the "Name" field, enter a name for the tool (e.g.
-    > "dependency-check").
+-   In the "Name" field, enter a name for the tool (e.g. "dependency-check").
 
--   In the "OWASP Dependency Check Home" field, enter the path to the
-    > directory where you extracted OWASP Dependency Check.
+-   In the "OWASP Dependency Check Home" field, enter the path to the directory where you extracted OWASP Dependency Check.
 
 -   Click on the "Save" button to save the tool configuration.
 
-You can now use the OWASP Dependency Check tool in your Jenkins jobs. To
-do this, you will need to add an "Invoke Dependency-Check" build step to
-your job and select the tool you just configured from the "Dependency
-Check Installation" dropdown menu.
+You can now use the OWASP Dependency Check tool in your Jenkins jobs. To do this, you will need to add an "Invoke Dependency-Check" build step to your job and select the tool you just configured from the "Dependency Check Installation" dropdown menu.
 
 ### **Installing Git plugin in Jenkins**
 
@@ -1169,8 +1028,7 @@ To install the Git plugin on Jenkins, follow these steps:
 
 -   Log in to the Jenkins dashboard as an administrator.
 
--   Click on the "Manage Jenkins" menu item, and then click on the
-    > "Manage Plugins" option.
+-   Click on the "Manage Jenkins" menu item, and then click on the "Manage Plugins" option.
 
 -   Click on the "Available" tab.
 
@@ -1180,16 +1038,13 @@ To install the Git plugin on Jenkins, follow these steps:
 
 -   Click on the "Install without restart" button to install the plugin.
 
-Once the plugin is installed, you can use it to check out code from a
-Git repository as part of your Jenkins builds. To do this, you will need
-to have Git installed on your Jenkins server.
+Once the plugin is installed, you can use it to check out code from a Git repository as part of your Jenkins builds. To do this, you will need to have Git installed on your Jenkins server.
 
 To install Git on your Jenkins server, follow these steps:
 
 #### **Linux:**
 
-On Linux, you can install Git using your distribution's package manager.
-For example, on Ubuntu, you can use apt-get to install Git:
+On Linux, you can install Git using your distribution's package manager. For example, on Ubuntu, you can use apt-get to install Git:
 
 **sudo apt-get update**
 
@@ -1203,30 +1058,25 @@ On MacOS, you can install Git using the brew package manager:
 
 #### **Windows:**
 
-On Windows, you can download the Git installer from the official Git
-website (<https://git-scm.com/downloads>) and run it.
+On Windows, you can download the Git installer from the official Git website (<https://git-scm.com/downloads>) and run it.
 
 To use the Git plugin, follow these steps:
 
 -   Create a new Jenkins job for your project.
 
--   In the "Source Code Management" section of the job configuration,
-    > select "Git" from the "SCM" dropdown menu.
+-   In the "Source Code Management" section of the job configuration, select "Git" from the "SCM" dropdown menu.
 
 -   In the "Repository URL" field, enter the URL of your Git repository.
 
--   If your repository requires authentication, click on the "Add"
-    > button next to the "Credentials" field and enter your credentials.
+-   If your repository requires authentication, click on the "Add" button next to the "Credentials" field and enter your credentials.
 
 -   Click on the "Save" button to save the job configuration.
 
-When you build the job, the plugin will check out the code from your Git
-repository and make it available for the rest of the build process.
+When you build the job, the plugin will check out the code from your Git repository and make it available for the rest of the build process.
 
 ## **Making all jobs in Jenkins**
 
-**Note: Before making the job first of all add the Web Server IP address
-and ssh credentials in the '/etc/ansible/hosts' file as follows**
+**Note: Before making the job first of all add the Web Server IP address and ssh credentials in the '/etc/ansible/hosts' file as follows**
 
 **\[linux\]**
 
@@ -1238,67 +1088,49 @@ and ssh credentials in the '/etc/ansible/hosts' file as follows**
 
 **ansible_password=@Bulb123**
 
-To create a freestyle project in Jenkins to run an Ansible playbook
-stored on your local system, follow these steps:
+To create a freestyle project in Jenkins to run an Ansible playbook stored on your local system, follow these steps:
 
 -   In the Jenkins dashboard, click on the "New Item" menu item.
 
--   Enter a name for your project in the "Item name" field and select
-    > "Freestyle project" from the "Kind" dropdown menu.
+-   Enter a name for your project in the "Item name" field and select "Freestyle project" from the "Kind" dropdown menu.
+    
+-   In the "Source Code Management" section, select "None" from the "SCM" dropdown menu.
 
--   In the "Source Code Management" section, select "None" from the
-    > "SCM" dropdown menu.
+-   In the "Build" section, click on the "Add build step" button and select "Invoke Ansible Playbook" from the dropdown menu.
 
--   In the "Build" section, click on the "Add build step" button and
-    > select "Invoke Ansible Playbook" from the dropdown menu.
+-   In the "Playbook Path" field, enter the path to your playbook (e.g. /home/ahmed_pinger/Documents/IEC/Playbooks/Playbook.yml).
+    
+-   In the "Inventory" field, enter the path to your inventory file (e.g. /etc/ansible/hosts).
 
--   In the "Playbook Path" field, enter the path to your playbook (e.g.
-    > /home/ahmed_pinger/Documents/IEC/Playbooks/Playbook.yml).
+-   In the "Credentials" field, click on the "Add" button and select "Username with password" from the dropdown menu.
 
--   In the "Inventory" field, enter the path to your inventory file
-    > (e.g. /etc/ansible/hosts).
-
--   In the "Credentials" field, click on the "Add" button and select
-    > "Username with password" from the dropdown menu.
-
--   Enter the username and password for your SSH credentials (e.g. root
-    > and @Bulb123).
-
+-   Enter the username and password for your SSH credentials (e.g. <username> and <password>).
+    
 -   Click on the "Save" button to save the project configuration.
 
-When you build the project, the plugin will run your ansible playbook
-using the specified inventory and SSH credentials.
+When you build the project, the plugin will run your ansible playbook using the specified inventory and SSH credentials.
 
 ### **Results**
 
 **Repeat the same procedure for all 8 playbooks**
 
-There is a bit of difference between these jobs and the job which is
-created for dependency-check. The walkthrough of that job is following.
+There is a bit of difference between these jobs and the job which is created for dependency-check. The walkthrough of that job is following.
 
-To create a Jenkins job to do a dependency check on a GitHub repository
-using the OWASP Dependency Check plugin, follow these steps:
+To create a Jenkins job to do a dependency check on a GitHub repository using the OWASP Dependency Check plugin, follow these steps:
 
 -   In the Jenkins dashboard, click on the "New Item" menu item.
 
--   Enter a name for your project in the "Item name" field and select
-    > "Freestyle project" from the "Kind" dropdown menu.
+-   Enter a name for your project in the "Item name" field and select "Freestyle project" from the "Kind" dropdown menu.
 
--   In the "Source Code Management" section, select "Git" from the "SCM"
-    > dropdown menu.
+-   In the "Source Code Management" section, select "Git" from the "SCM" dropdown menu.
 
--   In the "Repository URL" field, enter the URL of your GitHub
-    > repository.
+-   In the "Repository URL" field, enter the URL of your GitHub repository.
 
--   If your repository requires authentication, click on the "Add"
-    > button next to the "Credentials" field and enter your credentials
-    > if the repo is private.
+-   If your repository requires authentication, click on the "Add" button next to the "Credentials" field and enter your credentials if the repo is private.
 
--   In the "Build" section, click on the "Add build step" button and
-    > select "Invoke Dependency-Check" from the dropdown menu.
+-   In the "Build" section, click on the "Add build step" button and select "Invoke Dependency-Check" from the dropdown menu.
 
--   In the "Path to the project" field, enter the path to your project
-    > (e.g. .).
+-   In the "Path to the project" field, enter the path to your project (e.g. .).
 
 -   In the "Dependency Check Installation" field.
 
@@ -1308,11 +1140,9 @@ The report with the selected format will be stored here
 
 ## **Designing the pipeline**
 
-Now we have finally made all of our jobs and our dashboard should have
-to be look like this
+Now we have finally made all of our jobs and our dashboard should have to be look like this
 
-Now we will be making a pipeline to run all of these playbooks in one
-build.
+Now we will be making a pipeline to run all of these playbooks in one build.
 
 Starting with the pipeline code.
 ```groovy
@@ -1377,50 +1207,33 @@ pipeline {
 }
 ```
 
-This is a Jenkins pipeline script that defines a pipeline with nine
-stages. Each stage represents a task that the pipeline will perform.
+This is a Jenkins pipeline script that defines a pipeline with nine stages. Each stage represents a task that the pipeline will perform.
 
-The agent directive specifies that the pipeline can run on any available
-Jenkins agent.
+The agent directive specifies that the pipeline can run on any available Jenkins agent.
 
-The stages block defines the stages of the pipeline. Each stage is
-defined by a stage block that contains a steps block with one or more
-build steps.
+The stages block defines the stages of the pipeline. Each stage is defined by a stage block that contains a steps block with one or more build steps.
 
-The build steps in the pipeline script are used to trigger the execution
-of **Jenkins jobs**. The names of the jobs to be triggered are specified
-in single quotes (e.g. build 'IaC Checks').
+The build steps in the pipeline script are used to trigger the execution of **Jenkins jobs**. The names of the jobs to be triggered are specified in single quotes (e.g. build 'IaC Checks').
 
 Here is a description of each stage in the pipeline:
 
--   "Performing IaC Checks": This stage triggers a Jenkins job that
-    > performs infrastructure as code (IaC) checks.
+-   "Performing IaC Checks": This stage triggers a Jenkins job that performs infrastructure as code (IaC) checks.
+    
+-   "Cloning Project Repository": This stage triggers a Jenkins job that clones the project repository from GitHub.
+    
+-   "httpd Installation": This stage triggers a Jenkins job that installs the Apache HTTP server.
+    
+-   "Applying Setting to Only use HTTP": This stage triggers a Jenkins job that configures the Apache HTTP server to only use HTTP.
+    
+-   "Doing Port Redirection": This stage triggers a Jenkins job that performs port redirection.
 
--   "Cloning Project Repository": This stage triggers a Jenkins job that
-    > clones the project repository from GitHub.
+-   "Applying Least Privilege": This stage triggers a Jenkins job that applies the least privilege settings to the Apache HTTP server.
 
--   "httpd Installation": This stage triggers a Jenkins job that
-    > installs the Apache HTTP server.
+-   "Activating TLS Listener": This stage triggers a Jenkins job that activates a TLS listener on the Apache HTTP server.
+    
+-   "Applying HTTP Header Security": This stage triggers a Jenkins job that applies HTTP header security settings to the Apache HTTP server.
 
--   "Applying Setting to Only use HTTP": This stage triggers a Jenkins
-    > job that configures the Apache HTTP server to only use HTTP.
-
--   "Doing Port Redirection": This stage triggers a Jenkins job that
-    > performs port redirection.
-
--   "Applying Least Privilege": This stage triggers a Jenkins job that
-    > applies the least privilege settings to the Apache HTTP server.
-
--   "Activating TLS Listener": This stage triggers a Jenkins job that
-    > activates a TLS listener on the Apache HTTP server.
-
--   "Applying HTTP Header Security": This stage triggers a Jenkins job
-    > that applies HTTP header security settings to the Apache HTTP
-    > server.
-
--   "Performing Dependency Check": This stage triggers a Jenkins job
-    > that performs a dependency check using the OWASP Dependency Check
-    > plugin.
+-   "Performing Dependency Check": This stage triggers a Jenkins job that performs a dependency check using the OWASP Dependency Check plugin.
 
 This pipeline can be executed by running the pipeline job in Jenkins.
 
@@ -1428,8 +1241,7 @@ This pipeline can be executed by running the pipeline job in Jenkins.
 
 <img src="https://lh7-us.googleusercontent.com/5PHLgUwAmI7ntdENc9w3HlC_hUYbqpzTdd0DDuKharwkNKsPd52TJFMQ1HbU2DpKMQZ2yV81fqbtGHSkJN3cNoj3HGEsBQEO_IU50dTlTA6nui1wMaHCwr66bgIWw72wA4mmutpp_M8giN4hpN72tB8" style="width:6.5in;height:2.34722in" />
 
-We have a full-stage view of the pipeline where all stages of the
-pipeline is executed successfully.
+We have a full-stage view of the pipeline where all stages of the pipeline is executed successfully.
 
 And we have the deployed website as well
 
