@@ -825,7 +825,7 @@ To install the Ansible plugin on Jenkins, follow these steps:
 
 -   Log in to the Jenkins dashboard as an administrator.
 
--   Click on the "Manage Jenkins" menu item, and then click on the manage Plugins" option.
+-   Click on the "Manage Jenkins" menu item, and then click on the "manage Plugins" option.
 
 -   Click on the "Available" tab.
 
